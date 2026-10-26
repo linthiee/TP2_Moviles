@@ -1,22 +1,80 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TestMousseLogger : MonoBehaviour
+public class MousseLogger : MonoBehaviour
 {
-#if UNITY_ANDROID
+    [Header("UI Elements")]
+    public Text textDisplayLogs;
 
-    AndroidJavaObject loggerManagerInstance;
+    private AndroidJavaObject loggerManagerInstance;
+    private bool isSendingLog = false;
 
     void Start()
     {
-        using var loggerClass = new AndroidJavaClass("com.mousseigne.mousselogger.MousseLoggerManager");
-        loggerManagerInstance = loggerClass.CallStatic<AndroidJavaObject>("getInstance");
+        gameObject.name = "MousseLoggerObj";
 
-        loggerManagerInstance.Call("sendLog", "Hola desde unity");
-        long time = loggerManagerInstance.Call<long>("getTime");
-        Debug.Log($"Hora nativa: {time}");
+#if UNITY_ANDROID && !UNITY_EDITOR
+        using (var loggerClass = new AndroidJavaClass("com.mousseigne.mousselogger.MousseLoggerManager"))
+            loggerManagerInstance = loggerClass.CallStatic<AndroidJavaObject>("getInstance");
+        
+#endif
+        Application.logMessageReceived += HandleUnityLog;
+        RefreshLogsOnScreen();
     }
 
-    void OnDestroy() => loggerManagerInstance?.Dispose();
-
+    private void HandleUnityLog(string logString, string stackTrace, LogType type)
+    {
+        if (isSendingLog) 
+            return;
+        
+        isSendingLog = true;
+        
+        string formattedLog = $"[{type}] {logString}";
+        
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (loggerManagerInstance != null)
+            loggerManagerInstance.Call("sendLog", formattedLog);
+        
 #endif
+        isSendingLog = false;
+    }
+
+    public void RefreshLogsOnScreen()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (loggerManagerInstance != null && textDisplayLogs != null)
+        {
+            string allLogs = loggerManagerInstance.Call<string>("getAllLogs");
+            textDisplayLogs.text = allLogs;
+        }
+#else
+        if (textDisplayLogs != null)
+            textDisplayLogs.text = "Los logs solo funcionan en dispositivo Android";
+#endif
+    }
+
+    public void RequestClearLogs()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (loggerManagerInstance != null)
+            loggerManagerInstance.Call("requestClearLogs");
+        
+#endif
+    }
+
+    public void OnLogsCleared(string emptyMessage)
+    {
+        RefreshLogsOnScreen();
+    }
+
+    public void GenerateTestLog()
+    {
+        Debug.Log("Log de prueba generado a las: " + System.DateTime.Now);
+    }
+    
+    void OnDestroy()
+    {
+        Application.logMessageReceived -= HandleUnityLog;
+        loggerManagerInstance?.Dispose();
+    }
 }
