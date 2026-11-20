@@ -31,13 +31,13 @@ public class SpinningCylinder : MonoBehaviour
         float horizontalInput = moveAction.ReadValue<float>();
         if (Mathf.Abs(horizontalInput) > 0.01f)
         {
-            transform.Rotate(Vector3.forward, -horizontalInput * keyboardRotationSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.up, -horizontalInput * keyboardRotationSpeed * Time.deltaTime);
         }
 
         if (clickAction.IsPressed())
         {
             float pointerDeltaX = lookDeltaAction.ReadValue<float>();
-            transform.Rotate(Vector3.forward, -pointerDeltaX * dragSpeed);
+            transform.Rotate(Vector3.up, -pointerDeltaX * dragSpeed * Time.deltaTime);
         }
         
     }

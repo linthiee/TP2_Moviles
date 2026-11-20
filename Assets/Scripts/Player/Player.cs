@@ -4,14 +4,15 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private float _jumpVelocity = 3.0f;
+    private float _jumpVelocity;
     private Rigidbody _rigidbody;
 
     private bool _hasLanded;
 
     public void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        TryGetComponent(out _rigidbody);
+        _jumpVelocity = 3.0f;
     }
 
     public void FixedUpdate()
