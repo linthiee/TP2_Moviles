@@ -50,15 +50,15 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
-    - _StrokeBlendingNoiseScale: 500
-    - _StrokeBlendingNoiseStrength: 0.15
+    - _StrokeBlendingNoiseScale: 50
+    - _StrokeBlendingNoiseStrength: 0.14
     - _StrokeRandomness: 1
-    - _StrokeScale: 5
+    - _StrokeScale: 10
     - _UseBlendingNoise: 1
-    - _Variation: 0
+    - _Variation: 0.27
     - _XRMotionVectorsPass: 1
     m_Colors:
-    - _BaseColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _VariationColorA: {r: 0, g: 0, b: 0, a: 0}
     - _VariationColorB: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

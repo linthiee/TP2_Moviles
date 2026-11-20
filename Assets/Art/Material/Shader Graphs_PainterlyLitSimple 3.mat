@@ -49,8 +49,8 @@ Material:
     - _Metalic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0
-    - _StrokeBlendingNoiseScale: 500
+    - _Smoothness: 0.15
+    - _StrokeBlendingNoiseScale: 20
     - _StrokeBlendingNoiseStrength: 0.15
     - _StrokeRandomness: 1
     - _StrokeScale: 5
