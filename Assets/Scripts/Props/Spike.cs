@@ -8,7 +8,7 @@ public class Spike : MonoBehaviour
 
     void Start()
     {
-        _player = FindFirstObjectByType<Player>();
+        _player = FindFirstObjectByType(typeof(Player)) as Player;
     }
     void OnCollisionEnter(Collision collision)
     {
