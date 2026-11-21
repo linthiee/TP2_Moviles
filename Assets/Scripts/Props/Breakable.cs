@@ -24,7 +24,7 @@ public class Breakable : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        if (_player.Streak >= 2)
+        if (_player.Streak >= _player.NumToStreak)
         {
             Debug.Log("Breaking...");
             Break();

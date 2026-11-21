@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
 
     private int _streak;
     private int _bounces;
+    private int _numToStreak;
 
+    private bool _isOnStreak;
     private bool _hasLanded;
 
     MeshRenderer _meshRenderer;
@@ -19,6 +21,7 @@ public class Player : MonoBehaviour
 
     public Vector3 Position => transform.position;
     public int Streak => _streak;
+    public int NumToStreak => _numToStreak;
 
     public int Bounces
     {
@@ -45,6 +48,8 @@ public class Player : MonoBehaviour
         TryGetComponent(out _collider);
 
         _jumpVelocity = 3.0f;
+        _numToStreak = 2;
+        _isOnStreak = false;
     }
 
     public void FixedUpdate()
@@ -55,6 +60,13 @@ public class Player : MonoBehaviour
             _hasLanded = false;
             _streak = 0;
         }
+
+        if (_streak >= _numToStreak && !_isOnStreak)
+        {
+            Debug.Log("Streak started");
+            _isOnStreak = true;
+            EventBus.Raise<OnStreakStarted>();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -62,6 +74,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Cyllinder"))
         {
             _hasLanded = true;
+            _isOnStreak = false;
         }
     }
 
