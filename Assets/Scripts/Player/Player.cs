@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     private bool _hasLanded;
 
-    public void Start()
+   public void Start()
     {
         TryGetComponent(out _rigidbody);
         _jumpVelocity = 3.0f;
