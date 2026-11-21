@@ -62,13 +62,13 @@ Material:
     - _Metalic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.15
+    - _Smoothness: -6.16
     - _StrokeBlendingNoiseScale: 50
     - _StrokeBlendingNoiseStrength: 0.15
     - _StrokeRandomness: 1
     - _StrokeScale: 5
     - _UseBlendingNoise: 1
-    - _Variation: 0.1
+    - _Variation: 0.361
     - _XRMotionVectorsPass: 1
     m_Colors:
     - _BaseColor: {r: 0.6666667, g: 0.16470589, b: 1, a: 0}

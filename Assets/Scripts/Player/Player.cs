@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     {
         if (_hasLanded)
         {
-            _rigidbody.linearVelocity = new Vector3(_rigidbody.linearVelocity.x, _jumpVelocity, _rigidbody.linearVelocity.z);
+            _rigidbody.AddForce(Vector3.up * _jumpVelocity, ForceMode.Impulse);
             _hasLanded = false;
             _streak = 0;
         }
