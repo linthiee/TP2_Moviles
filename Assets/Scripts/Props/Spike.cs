@@ -12,7 +12,7 @@ public class Spike : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
             EventBus.Raise<OnSpikeCollision>(_player.transform.position);
     }
 }
