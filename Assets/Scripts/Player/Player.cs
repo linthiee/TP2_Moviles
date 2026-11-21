@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     private bool _hasLanded;
 
+    public Vector3 Position => transform.position;
+    
    public void Start()
     {
         TryGetComponent(out _rigidbody);

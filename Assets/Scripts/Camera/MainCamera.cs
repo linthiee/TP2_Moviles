@@ -6,9 +6,10 @@ public class MainCamera : MonoBehaviour
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private Vector3 _targetPosition;
 
-    private float _offsetY;
     private float _moveSpeed;
 
+    private const float _spaceBetweenArchs = 0.55f;
+    
     public void OnEnable()
     {
         EventBus.Subscribe<OnArchPassed>(OnArchPassed);
@@ -24,7 +25,6 @@ public class MainCamera : MonoBehaviour
             Debug.Log("EventBus is not null");
         
         _targetPosition = transform.position;
-        _offsetY = 0.5f;
         _moveSpeed = 7.0f;
     }
 
@@ -36,6 +36,6 @@ public class MainCamera : MonoBehaviour
    private void OnArchPassed(in OnArchPassed eventData)
    {
        Debug.Log("Assigning new camera Y position");
-       _targetPosition.y = eventData.ArchPosY + _offsetY;
+       _targetPosition.y = eventData.ArchPosY - _spaceBetweenArchs;
    }
 }
