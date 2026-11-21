@@ -11,7 +11,7 @@ public class SpinningCylinder : MonoBehaviour
     [SerializeField] private InputAction moveAction;
     [SerializeField] private InputAction lookDeltaAction;
     [SerializeField] private InputAction clickAction;
-
+    
     private void OnEnable()
     {
         moveAction.Enable();

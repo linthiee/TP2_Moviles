@@ -18,4 +18,9 @@ public class ArchCollider : MonoBehaviour
             Debug.Log("Arch passed!");
         }
     }
+    
+    public void ResetTrigger()
+    {
+        _hasBeenPassedYet = false;
+    }
 }

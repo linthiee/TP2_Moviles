@@ -1,22 +1,33 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-    private int _life = 4;
+    private int _maxLife;
+    private int _life;
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private Player _player;
-
     private MeshRenderer _mesh;
     private MeshCollider _collider;
 
-    private void Start()
+    private void Awake()
     {
         TryGetComponent(out _mesh);
         TryGetComponent(out _collider);
+    }
 
-        _player = FindFirstObjectByType(typeof(Player)) as Player;
+    private void Start()
+    {
+        _player = FindFirstObjectByType<Player>();
+        ResetState();
+    }
+
+    public void ResetState()
+    {
+        _maxLife = 3;
+        _life = _maxLife;
+        _mesh.enabled = true;
+        _collider.enabled = true;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -26,7 +37,6 @@ public class Breakable : MonoBehaviour
 
         if (_player.Streak >= _player.NumToStreak)
         {
-            Debug.Log("Breaking...");
             Break();
             return;
         }

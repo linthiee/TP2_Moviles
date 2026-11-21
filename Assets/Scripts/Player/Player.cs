@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public int Bounces
     {
         get => _bounces;
-        set => _bounces += value;
+        set => _bounces = value;
     }
 
     private void OnEnable()
