@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnSpikeCollision>(OnSpikeCollision);
     }
-
+    
     public void Start()
     {
         TryGetComponent(out _rigidbody);
@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
     {
         if (_hasLanded)
         {
+            EventBus.Raise<OnPlayerBounce>();
+            
             _rigidbody.linearVelocity = new Vector3(_rigidbody.linearVelocity.x, _jumpVelocity, _rigidbody.linearVelocity.z);
             _hasLanded = false;
             _streak = 0;
@@ -93,4 +95,5 @@ public class Player : MonoBehaviour
         _rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
     }
+
 }
