@@ -28,6 +28,7 @@ public class VFXManager : MonoBehaviour
     {
        _archBreakPool = new ObjectPool<PooledVFX>(archBreakPrefab, 4, transform);
         _playerDeathPool = new ObjectPool<PooledVFX>(playerDeathPrefab, 2, transform);
+        _winningPool = new ObjectPool<PooledVFX>(winningPrefab, 2, transform);
     }
     
     private void OnArchBroken(in OnArchBroken eventData)
@@ -45,8 +46,11 @@ public class VFXManager : MonoBehaviour
     }
     private void OnPlayerWin(in OnPlayerWin eventData)
     {
+        float distanceFromCamera = 2.0f;  
+        Vector3 topPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.05f, distanceFromCamera));
+        
         PooledVFX vfx = _winningPool.Get();
         vfx.Initialize(_winningPool.Return);
-        vfx.PlayAt(eventData.Position);
+        vfx.PlayAt(topPos);
     }
 }

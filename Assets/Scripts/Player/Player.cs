@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public Vector3 Position => transform.position;
     public int Streak => _streak;
     public int NumToStreak => _numToStreak;
-
+    
     public int Bounces
     {
         get => _bounces;
@@ -33,12 +33,14 @@ public class Player : MonoBehaviour
     {
         EventBus.Subscribe<OnArchPassed>(OnArchPassed);
         EventBus.Subscribe<OnSpikeCollision>(OnSpikeCollision);
+        EventBus.Subscribe<OnPlayerWin>(OnPlayerWin);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnSpikeCollision>(OnSpikeCollision);
+        EventBus.Unsubscribe<OnPlayerWin>(OnPlayerWin);
     }
     
     public void Start()
@@ -95,5 +97,10 @@ public class Player : MonoBehaviour
         _rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
     }
-
+    
+    private void OnPlayerWin(in OnPlayerWin eventData)
+    {
+        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.isKinematic = true;
+    }
 }

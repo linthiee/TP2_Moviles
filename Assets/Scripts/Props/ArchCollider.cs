@@ -9,7 +9,7 @@ public class ArchCollider : MonoBehaviour
     {
         _hasBeenPassedYet = false;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !_hasBeenPassedYet)
@@ -20,14 +20,6 @@ public class ArchCollider : MonoBehaviour
         }
     }
 
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.gameObject.transform.position.y > transform.position.y)
-    //     {
-    //         Debug.Log("Were back up");
-    //     }
-    // }
-    
     public void ResetTrigger()
     {
         _hasBeenPassedYet = false;

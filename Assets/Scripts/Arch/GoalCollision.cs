@@ -6,7 +6,8 @@ public class GoalCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if  (collision.gameObject.CompareTag("Player"))
+        Debug.Log("Win!");
+        if (collision.gameObject.CompareTag("Player"))
             EventBus.Raise<OnPlayerWin>();
     }
 }

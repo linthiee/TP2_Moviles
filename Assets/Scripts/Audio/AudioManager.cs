@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip archPassedClip;
     [SerializeField] private AudioClip playerDeathClip;
     [SerializeField] private AudioClip winClip;
+    [SerializeField] private AudioClip coinCollectedClip;
     
     private float _basePitch = 1.0f;
     private float _pitchStep = 0.1f; 
@@ -68,6 +69,7 @@ public class AudioManager : MonoBehaviour
     }
     private void OnPlayerWin(in OnPlayerWin eventData)
     {
+        Debug.Log("Playing win audio clip");
         sfxSource.PlayOneShot(winClip);
     }
     
