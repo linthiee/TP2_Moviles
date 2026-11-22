@@ -3,21 +3,24 @@ using UnityEngine;
 
 public class TowerGenerator : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private ArchFactory ringFactory;
+    [Header("References")] [SerializeField]
+    private ArchFactory ringFactory;
 
-    [Header("Tower Dimensions")]
-    [SerializeField] private float startY = 0.0f;
+    [Header("Tower Dimensions")] [SerializeField]
+    private float startY = 0.0f;
+
     [SerializeField] private float archSpacing = 0.55f;
     [SerializeField] private int initialVisibleFloors = 10;
     [SerializeField] private int floorsKeptAbove = 2;
 
-    [Header("Arch Prefab Slots")]
-    [SerializeField] private int spikeSlots = 14;
+    [Header("Arch Prefab Slots")] [SerializeField]
+    private int spikeSlots = 14;
+
     [SerializeField] private int coinSlots = 3;
 
-    [Header("For testing without menu)")]
-    [SerializeField] private bool testEndlessMode = false;
+    [Header("For testing without menu)")] [SerializeField]
+    private bool testEndlessMode = false;
+
     [SerializeField] private int testLevelNumber = 1;
     [SerializeField] private int baseFloorsPerLevel = 15;
 
@@ -30,20 +33,38 @@ public class TowerGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<OnArchPassed>(HandleArchPassed);
+        EventBus.Subscribe<OnArchPassed>(OnArchPassed);
         EventBus.Subscribe<OnPlayerRespawn>(OnPlayerRespawn);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<OnArchPassed>(HandleArchPassed);
+        EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnPlayerRespawn>(OnPlayerRespawn);
     }
 
     private void Start()
     {
-        IGenerationStrategy strategy = testEndlessMode ? new EndlessGenerationStrategy(spikeSlots, coinSlots) :
-            new LevelGenerationStrategy(testLevelNumber, baseFloorsPerLevel + (testLevelNumber * 2), spikeSlots, coinSlots);
+        IGenerationStrategy strategy;
+        GameSessionService session = ServiceProvider.Instance.GetService<GameSessionService>();
+
+        switch (session.SelectedMode)
+        {
+            case GameMode.Endless:
+                strategy = new EndlessGenerationStrategy(spikeSlots, coinSlots);
+                break;
+
+            case GameMode.Tutorial:
+                strategy = new TutorialGenerationStrategy(session.TutorialStep);
+                break;
+
+            case GameMode.Level:
+            default:
+                int totalFloors = baseFloorsPerLevel + (session.CurrentLevel * 2);
+                strategy = new LevelGenerationStrategy(session.CurrentLevel, totalFloors, spikeSlots, coinSlots);
+                break;
+        }
+
 
         BuildTower(strategy);
     }
@@ -70,7 +91,7 @@ public class TowerGenerator : MonoBehaviour
             BuildTower(_strategy);
     }
 
-    private void HandleArchPassed(in OnArchPassed eventData)
+    private void OnArchPassed(in OnArchPassed eventData)
     {
         _passedCount++;
 
@@ -112,7 +133,7 @@ public class TowerGenerator : MonoBehaviour
 
         ringFactory.HideGoal();
     }
-    
+
     private void OnPlayerRespawn(in OnPlayerRespawn eventData)
     {
         RestartCurrentTower();
