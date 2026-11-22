@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 3322367471005579458}
   - component: {fileID: 3762589209642246980}
   - component: {fileID: 7510059831279325263}
+  - component: {fileID: 4593553575776085649}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Cyllinder
@@ -151,6 +152,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1865056248366311061, guid: abee6802a4e0ec442b36a138c7adf016, type: 3}
+--- !u!114 &4593553575776085649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255051017725688013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6065b8911374717b9badc0c02818de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoalCollision
 --- !u!1001 &72661162608337701
 PrefabInstance:
   m_ObjectHideFlags: 0

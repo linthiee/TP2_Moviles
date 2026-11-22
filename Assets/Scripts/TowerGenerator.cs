@@ -8,7 +8,7 @@ public class TowerGenerator : MonoBehaviour
 
     [Header("Tower Dimensions")]
     [SerializeField] private float startY = 0.0f;
-    [SerializeField] private float archSpacing = 2.5f;
+    [SerializeField] private float archSpacing = 0.55f;
     [SerializeField] private int initialVisibleFloors = 10;
     [SerializeField] private int floorsKeptAbove = 2;
 

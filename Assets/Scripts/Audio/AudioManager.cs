@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip bounceClip;
     [SerializeField] private AudioClip archPassedClip;
     [SerializeField] private AudioClip playerDeathClip;
+    [SerializeField] private AudioClip winClip;
     
     private float _basePitch = 1.0f;
     private float _pitchStep = 0.1f; 
@@ -24,6 +25,7 @@ public class AudioManager : MonoBehaviour
         EventBus.Subscribe<OnArchPassed>(OnArchPassed);
         EventBus.Subscribe<OnArchBroken>(OnArchBroken);
         EventBus.Subscribe<OnSpikeCollision>(OnSpikeCollision);
+        EventBus.Subscribe<OnPlayerWin>(OnPlayerWin);
     }
 
     private void OnDisable()
@@ -31,6 +33,7 @@ public class AudioManager : MonoBehaviour
         EventBus.Unsubscribe<OnPlayerBounce>(OnPlayerBounce);
         EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnSpikeCollision>(OnSpikeCollision);
+        EventBus.Unsubscribe<OnPlayerWin>(OnPlayerWin);
     }
 
     private void Start()
@@ -62,6 +65,10 @@ public class AudioManager : MonoBehaviour
     private void OnSpikeCollision(in OnSpikeCollision eventData)
     {
         sfxSource.PlayOneShot(playerDeathClip);
+    }
+    private void OnPlayerWin(in OnPlayerWin eventData)
+    {
+        sfxSource.PlayOneShot(winClip);
     }
     
 }

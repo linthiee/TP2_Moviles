@@ -5,19 +5,23 @@ public class VFXManager : MonoBehaviour
 {
     [SerializeField] private PooledVFX archBreakPrefab;
     [SerializeField] private PooledVFX playerDeathPrefab;
+    [SerializeField] private PooledVFX winningPrefab;
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private ObjectPool<PooledVFX> _archBreakPool;
     private ObjectPool<PooledVFX> _playerDeathPool;
+    private ObjectPool<PooledVFX> _winningPool;
     private void OnEnable()
     {
         EventBus.Subscribe<OnSpikeCollision>(OnSpikeCollision);
         EventBus.Subscribe<OnArchBroken>(OnArchBroken);
+        EventBus.Subscribe<OnPlayerWin>(OnPlayerWin);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<OnSpikeCollision>(OnSpikeCollision);
         EventBus.Unsubscribe<OnArchBroken>(OnArchBroken);
+        EventBus.Unsubscribe<OnPlayerWin>(OnPlayerWin);
     }
 
     private void Awake()
@@ -37,6 +41,12 @@ public class VFXManager : MonoBehaviour
     {
         PooledVFX vfx = _playerDeathPool.Get();
         vfx.Initialize(_playerDeathPool.Return);
+        vfx.PlayAt(eventData.Position);
+    }
+    private void OnPlayerWin(in OnPlayerWin eventData)
+    {
+        PooledVFX vfx = _winningPool.Get();
+        vfx.Initialize(_winningPool.Return);
         vfx.PlayAt(eventData.Position);
     }
 }

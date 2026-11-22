@@ -1624,6 +1624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VFXManager
   archBreakPrefab: {fileID: -2732588436231865439, guid: e3585ed5370c1434abe9c5fde7eb1a52, type: 3}
   playerDeathPrefab: {fileID: -2732588436231865439, guid: ef69df6868c584f48a2301e0bf6a4a3b, type: 3}
+  winningPrefab: {fileID: 0}
 --- !u!4 &144416840
 Transform:
   m_ObjectHideFlags: 0
@@ -2130,7 +2131,7 @@ Transform:
   m_GameObject: {fileID: 201472779}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.135, y: 2.41452, z: -6.605}
+  m_LocalPosition: {x: 0.135, y: 1, z: -6.7}
   m_LocalScale: {x: 0.1913799, y: 0.1913799, z: 0.1913799}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6123,6 +6124,7 @@ MonoBehaviour:
   bounceClip: {fileID: 8300000, guid: 252949e610b14264db181b093cef0d8e, type: 3}
   archPassedClip: {fileID: 8300000, guid: 569096d7ef854434fb6c97cfb6c291de, type: 3}
   playerDeathClip: {fileID: 8300000, guid: 0df8436ed8839aa4898f38ecb8564966, type: 3}
+  winClip: {fileID: 0}
 --- !u!82 &702372396
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11218,7 +11220,7 @@ MonoBehaviour:
   startY: 0
   archSpacing: 0.55
   initialVisibleFloors: 5
-  floorsKeptAbove: 2
+  floorsKeptAbove: 3
   spikeSlots: 14
   coinSlots: 3
   testEndlessMode: 1
@@ -14499,7 +14501,7 @@ Transform:
   m_GameObject: {fileID: 1300477194}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19625,7 +19627,7 @@ Transform:
   m_GameObject: {fileID: 1751612183}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01645, y: -0, z: -6.07749}
+  m_LocalPosition: {x: 0, y: -0, z: -6.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21994,7 +21996,7 @@ Transform:
   m_GameObject: {fileID: 1872683106}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30986983, y: -0, z: -0, w: 0.9507791}
-  m_LocalPosition: {x: 0, y: 3.32, z: -8.73}
+  m_LocalPosition: {x: 0, y: 2, z: -8.825}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
