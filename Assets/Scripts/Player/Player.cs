@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private Transform respawnPoint;
+    
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private float _jumpVelocity;
@@ -95,12 +95,34 @@ public class Player : MonoBehaviour
         _collider.enabled = false;
 
         _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
+
+        _hasLanded = false;
+        _isOnStreak = false;
+        _streak = 0;
+        _bounces = 0;
+
+        ServiceProvider.Instance.GetService<TaskScheduler>().Schedule(Respawm, 2.0f);
     }
     
     private void OnPlayerWin(in OnPlayerWin eventData)
     {
         _rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
+    }
+
+    private void Respawm()
+    {
+        transform.position = respawnPoint.position;
+
+        _meshRenderer.enabled = true;
+        _collider.enabled = true;
+
+        _rigidbody.isKinematic = false;
+        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+
+        EventBus.Raise<OnPlayerRespawn>();
     }
 }

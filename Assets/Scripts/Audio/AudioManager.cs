@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
         EventBus.Subscribe<OnArchBroken>(OnArchBroken);
         EventBus.Subscribe<OnSpikeCollision>(OnSpikeCollision);
         EventBus.Subscribe<OnPlayerWin>(OnPlayerWin);
+        EventBus.Subscribe<OnCoinCollected>(OnCoinCollected);
     }
 
     private void OnDisable()
@@ -35,8 +36,9 @@ public class AudioManager : MonoBehaviour
         EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnSpikeCollision>(OnSpikeCollision);
         EventBus.Unsubscribe<OnPlayerWin>(OnPlayerWin);
+        EventBus.Unsubscribe<OnCoinCollected>(OnCoinCollected);
     }
-
+    
     private void Start()
     {
         _player = FindFirstObjectByType(typeof(Player)) as Player;
@@ -72,5 +74,9 @@ public class AudioManager : MonoBehaviour
         Debug.Log("Playing win audio clip");
         sfxSource.PlayOneShot(winClip);
     }
-    
+    private void OnCoinCollected(in OnCoinCollected eventData)
+    {
+     sfxSource.PlayOneShot(coinCollectedClip);
+    }
+
 }

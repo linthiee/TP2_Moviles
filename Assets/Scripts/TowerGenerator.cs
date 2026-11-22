@@ -31,11 +31,13 @@ public class TowerGenerator : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<OnArchPassed>(HandleArchPassed);
+        EventBus.Subscribe<OnPlayerRespawn>(OnPlayerRespawn);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<OnArchPassed>(HandleArchPassed);
+        EventBus.Unsubscribe<OnPlayerRespawn>(OnPlayerRespawn);
     }
 
     private void Start()
@@ -109,5 +111,10 @@ public class TowerGenerator : MonoBehaviour
         }
 
         ringFactory.HideGoal();
+    }
+    
+    private void OnPlayerRespawn(in OnPlayerRespawn eventData)
+    {
+        RestartCurrentTower();
     }
 }
