@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button playLevelButton;
     [SerializeField] private TMP_Text playLevelButtonText;
     [SerializeField] private Button playEndlessButton;
+    [SerializeField] private Button tutorialButton;
 
     [Header("Panel")]
     [SerializeField] private GameObject logPanel;
@@ -35,6 +36,7 @@ public class MainMenu : MonoBehaviour
     {
         playLevelButton?.onClick.AddListener(OnPlayLevelClicked);
         playEndlessButton?.onClick.AddListener(OnPlayEndlessClicked);
+        tutorialButton?.onClick.AddListener(OnTutorialClicked);
 
         shopButton?.onClick.AddListener(OnShopClicked);
         achievementsButton?.onClick.AddListener(OnAchievementsClicked);
@@ -46,6 +48,7 @@ public class MainMenu : MonoBehaviour
     {
         playLevelButton?.onClick.RemoveListener(OnPlayLevelClicked);
         playEndlessButton?.onClick.RemoveListener(OnPlayEndlessClicked);
+        tutorialButton?.onClick.RemoveListener(OnTutorialClicked);
 
         shopButton?.onClick.RemoveListener(OnShopClicked);
         achievementsButton?.onClick.RemoveListener(OnAchievementsClicked);
@@ -65,6 +68,11 @@ public class MainMenu : MonoBehaviour
         LoadGameplay();
     }
 
+    private void OnTutorialClicked()
+    {
+        Session.SelectTutorialMode();
+        LoadGameplay();
+    }
     private void OnShopClicked()
     {
         Debug.Log("[MainMenu] Open Shop");

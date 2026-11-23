@@ -16,7 +16,7 @@ public class LogPanel : MonoBehaviour
 
     private MousseLogger _logger;
 
-    private void Start()
+    private void Awake()
     {
         _logger = ServiceProvider.Instance.GetService<MousseLogger>();
     }

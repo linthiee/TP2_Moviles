@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
         _rigidbody.isKinematic = true;
     }
 
-    private void Respawm()
+    public void Respawm()
     {
         transform.position = respawnPoint.position;
 

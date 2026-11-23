@@ -14,6 +14,8 @@ public class Score : MonoBehaviour
     [SerializeField] private float punchDuration = 0.15f;
 
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private GameSessionService Session => ServiceProvider.Instance.GetService<GameSessionService>();
+    private bool IsTutorial => Session != null && Session.SelectedMode == GameMode.Tutorial;
 
     private int _score;
     private int _currentStreak;
@@ -50,6 +52,9 @@ public class Score : MonoBehaviour
 
     private void OnArchPassed(in OnArchPassed eventData)
     {
+        if (IsTutorial)
+            return;
+
         _currentStreak++;
         int pointsToAdd = baseArchPoints * _currentStreak;
         AddScore(pointsToAdd);
@@ -57,6 +62,9 @@ public class Score : MonoBehaviour
 
     private void OnArchBroken(in OnArchBroken eventData)
     {
+        if (IsTutorial)
+            return;
+
         AddScore(archBreakBonus);
         ResetStreakVisual();
     }
@@ -83,6 +91,11 @@ public class Score : MonoBehaviour
 
     private void ResetScore()
     {
+        bool showScore = !IsTutorial;
+
+        scoreText.gameObject.SetActive(showScore);
+        whiteHighlightScoreText.gameObject.SetActive(showScore);
+
         _score = 0;
         UpdateScoreText();
         ResetStreakVisual();
@@ -108,10 +121,10 @@ public class Score : MonoBehaviour
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
-            
+
             scoreText.transform.localScale = Vector3.Lerp(_originalScoreScale, targetScale, elapsed / halfDuration);
             whiteHighlightScoreText.transform.localScale = Vector3.Lerp(_originalScoreScale, targetScale, elapsed / halfDuration);
-            
+
             yield return null;
         }
 
@@ -119,7 +132,7 @@ public class Score : MonoBehaviour
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
-            
+
             scoreText.transform.localScale = Vector3.Lerp(targetScale, _originalScoreScale, elapsed / halfDuration);
             whiteHighlightScoreText.transform.localScale = Vector3.Lerp(targetScale, _originalScoreScale, elapsed / halfDuration);
 
@@ -128,7 +141,7 @@ public class Score : MonoBehaviour
 
         scoreText.transform.localScale = _originalScoreScale;
         whiteHighlightScoreText.transform.localScale = _originalScoreScale;
-        
+
         _punchCoroutine = null;
     }
 }
