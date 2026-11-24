@@ -23,8 +23,7 @@ public class ServiceProvider
 
     public void AddService<ServiceType>(IService service) where ServiceType : class, IService
     {
-        if (!services.ContainsKey(typeof(ServiceType)))
-            services.Add(typeof(ServiceType), service);
+            services[typeof(ServiceType)] = service;
     }
 
     public void RemoveService<ServiceType>() where ServiceType : class, IService

@@ -40,4 +40,10 @@ public class TaskScheduler : MonoBehaviour, IService
     {
         _scheduledCalls.Add(new ScheduledCall(callback, remainingTime));
     }
+    
+    private void OnDestroy()
+    {
+        if (ServiceProvider.Instance.ContainsService<TaskScheduler>() && ServiceProvider.Instance.GetService<TaskScheduler>() == this)
+            ServiceProvider.Instance.RemoveService<TaskScheduler>();
+    }
 }
