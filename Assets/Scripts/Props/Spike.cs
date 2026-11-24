@@ -12,6 +12,8 @@ public class Spike : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("[Spike] Raising OnSpikeCollision");
+        
         if (collision.gameObject.CompareTag("Player"))
             EventBus.Raise<OnSpikeCollision>(_player.transform.position);
     }

@@ -91,6 +91,8 @@ public class Player : MonoBehaviour
 
     private void OnSpikeCollision(in OnSpikeCollision eventData)
     {
+        Debug.Log("[Player] OnSpikeCollision recibido");
+
         _meshRenderer.enabled = false;
         _collider.enabled = false;
 

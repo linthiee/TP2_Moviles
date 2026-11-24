@@ -1,10 +1,10 @@
-
 using System;
 using System.Collections.Generic;
 
 public class EventBus : IService
 {
     public delegate void EventCallback<T>(in T eventData) where T : struct, IEvent;
+
     public bool IsPersistant => true;
     private ConcurrentPool _eventPool = new ConcurrentPool();
     private Dictionary<Type, List<Delegate>> _events = new Dictionary<Type, List<Delegate>>();
@@ -34,9 +34,17 @@ public class EventBus : IService
         {
             foreach (Delegate callback in new List<Delegate>(subscriptions))
             {
-                ((EventCallback<T>)callback)?.Invoke(raisingEvent);
+                try
+                {
+                    ((EventCallback<T>)callback)?.Invoke(raisingEvent);
+                }
+                catch (Exception e)
+                {
+                    UnityEngine.Debug.LogException(e);
+                }
             }
         }
+
         _eventPool.Release(raisingEvent);
     }
 
