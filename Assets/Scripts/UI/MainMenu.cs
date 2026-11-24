@@ -98,6 +98,6 @@ public class MainMenu : MonoBehaviour
 
     private void LoadGameplay()
     {
-        SceneManager.LoadSceneAsync(gameplaySceneName);
+        AsyncLoading.Load(gameplaySceneName);
     }
 }

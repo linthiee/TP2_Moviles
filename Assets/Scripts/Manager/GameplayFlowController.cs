@@ -163,6 +163,6 @@ public class GameplayFlowController : MonoBehaviour
     {
         Time.timeScale = 1.0f;
 
-        SceneManager.LoadSceneAsync(mainMenuSceneName);
+        AsyncLoading.Load(mainMenuSceneName);
     }
 }
