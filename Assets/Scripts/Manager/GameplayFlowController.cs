@@ -31,6 +31,7 @@ public class GameplayFlowController : MonoBehaviour
 
     private bool _isPaused;
     private bool _hasAdvanced;
+    public bool IsTutorial => Session.SelectedMode == GameMode.Tutorial;
 
     private void OnEnable()
     {

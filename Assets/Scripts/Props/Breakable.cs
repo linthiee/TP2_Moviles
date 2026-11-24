@@ -9,6 +9,8 @@ public class Breakable : MonoBehaviour
     private Player _player;
     private MeshRenderer _mesh;
     private MeshCollider _collider;
+    
+    private GameplayFlowController _controller;
 
     private void Awake()
     {
@@ -19,6 +21,8 @@ public class Breakable : MonoBehaviour
     private void Start()
     {
         _player = FindFirstObjectByType<Player>();
+        _controller  = FindFirstObjectByType<GameplayFlowController>();
+        
         ResetState();
     }
 
@@ -50,7 +54,8 @@ public class Breakable : MonoBehaviour
 
     private void Break()
     {
-        EventBus.Raise<OnArchBroken>(_player.Position);
+        if (!_controller.IsTutorial)
+          EventBus.Raise<OnArchBroken>(_player.Position);
 
         _mesh.enabled = false;
         _collider.enabled = false;
