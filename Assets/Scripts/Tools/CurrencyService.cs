@@ -10,14 +10,9 @@ public class CurrencyService : IService
     public bool IsPersistant => true;
     public int Coins { get; private set; } = PlayerPrefs.GetInt(CoinsKey, 0);
 
-    public void OnEnable()
+    public CurrencyService()
     {
         EventBus.Subscribe<OnCoinCollected>(OnCoinCollected);
-    }
-    
-    public void OnDisable()
-    {
-        EventBus.Unsubscribe<OnCoinCollected>(OnCoinCollected);
     }
 
     public void AddCoins(int amount)

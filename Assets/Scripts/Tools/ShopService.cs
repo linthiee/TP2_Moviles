@@ -18,10 +18,10 @@ public class ShopService : IService
     public readonly SkinData[] Catalog = new SkinData[]
     {
         new SkinData { Id = "default", DisplayName = "Classic", Price = 0,  ResourcePath = "" },
-        new SkinData { Id = "atom",    DisplayName = "Atom",    Price = 5, ResourcePath = "Resources/AtomBall" },
-        new SkinData { Id = "bucky",   DisplayName = "Bucky",   Price = 15, ResourcePath = "Resources/BuckyBall" },
-        new SkinData { Id = "bomb",    DisplayName = "Bomb",    Price = 30, ResourcePath = "Resources/BombBall" },
-        new SkinData { Id = "spike",   DisplayName = "Spike",   Price = 45, ResourcePath = "Resources/SpikeMetalBall" },
+        new SkinData { Id = "atom",    DisplayName = "Atom",    Price = 5,  ResourcePath = "AtomBall" },
+        new SkinData { Id = "bucky",   DisplayName = "Bucky",   Price = 15, ResourcePath = "BuckyBall" },
+        new SkinData { Id = "bomb",    DisplayName = "Bomb",    Price = 30, ResourcePath = "BombBall" },
+        new SkinData { Id = "spike",   DisplayName = "Metal",   Price = 45, ResourcePath = "SplitMetalBall" },
     };
 
     private GameObject _loadedSkinPrefab;

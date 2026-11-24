@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private GameSessionService Session => ServiceProvider.Instance.GetService<GameSessionService>();
     private bool IsTutorial => Session != null && Session.SelectedMode == GameMode.Tutorial;
-
+    
     private const float _rotationSpeed = 70.0f;
 
     private void Update()

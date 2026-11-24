@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     [Header("Panel")]
     [SerializeField] private GameObject logPanel;
     [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject shopPanel;
     
     [Header("Feature Buttons")]
     [SerializeField] private Button shopButton;
@@ -75,7 +76,8 @@ public class MainMenu : MonoBehaviour
     }
     private void OnShopClicked()
     {
-        Debug.Log("[MainMenu] Open Shop");
+        mainMenuPanel.SetActive(false);
+        shopPanel.SetActive(true);
     }
 
     private void OnAchievementsClicked()

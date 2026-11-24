@@ -4,15 +4,14 @@ using UnityEngine.UI;
 
 public class ShopPanel : MonoBehaviour
 {
-    [Header("Panels")]
-    [SerializeField] private GameObject returnPanel;
+    [Header("Panels")] [SerializeField] private GameObject returnPanel;
 
-    [Header("Header")]
-    [SerializeField] private TMP_Text coinsText;
+    [Header("Header")] [SerializeField] private TMP_Text coinsText;
     [SerializeField] private Button closeButton;
 
-    [Header("Skin Buttons")]
-    [SerializeField] private Button[] skinButtons;
+    [Header("Skin Buttons")] [SerializeField]
+    private Button[] skinButtons;
+
     [SerializeField] private TMP_Text[] skinButtonTexts;
 
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
@@ -29,8 +28,8 @@ public class ShopPanel : MonoBehaviour
             skinButtons[i]?.onClick.AddListener(() => OnSkinClicked(index));
         }
 
-        EventBus?.Subscribe<OnCoinsChanged>(OnCoinsChanged);
-        EventBus?.Subscribe<OnShopUpdated>(OnShopUpdated);
+        EventBus.Subscribe<OnCoinsChanged>(OnCoinsChanged);
+        EventBus.Subscribe<OnShopUpdated>(OnShopUpdated);
 
         RefreshUI();
     }
@@ -42,8 +41,8 @@ public class ShopPanel : MonoBehaviour
         for (int i = 0; i < skinButtons.Length; i++)
             skinButtons[i]?.onClick.RemoveAllListeners();
 
-        EventBus?.Unsubscribe<OnCoinsChanged>(OnCoinsChanged);
-        EventBus?.Unsubscribe<OnShopUpdated>(OnShopUpdated);
+        EventBus.Unsubscribe<OnCoinsChanged>(OnCoinsChanged);
+        EventBus.Unsubscribe<OnShopUpdated>(OnShopUpdated);
     }
 
     private void OnSkinClicked(int index)
@@ -67,8 +66,7 @@ public class ShopPanel : MonoBehaviour
 
     private void RefreshUI()
     {
-        if (Currency != null)
-            UpdateCoinsUI(Currency.Coins);
+        UpdateCoinsUI(Currency.Coins);
 
         if (Shop == null)
             return;
@@ -80,11 +78,11 @@ public class ShopPanel : MonoBehaviour
             bool equipped = Shop.EquippedSkinId == skin.Id;
 
             if (equipped)
-                skinButtonTexts[i].text = $"{skin.DisplayName}\n(Equipped)";
+                skinButtonTexts[i].text = $"{skin.DisplayName} (Equipped)";
             else if (unlocked)
-                skinButtonTexts[i].text = $"{skin.DisplayName}\n(Equip)";
+                skinButtonTexts[i].text = $"{skin.DisplayName} (Equip)";
             else
-                skinButtonTexts[i].text = $"{skin.DisplayName}\n{skin.Price} Coins";
+                skinButtonTexts[i].text = $"{skin.DisplayName} - {skin.Price} Coins";
 
             skinButtons[i].interactable = !equipped && (unlocked || (Currency != null && Currency.Coins >= skin.Price));
         }
