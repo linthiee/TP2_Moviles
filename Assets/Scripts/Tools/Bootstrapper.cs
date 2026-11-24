@@ -9,6 +9,7 @@ public static class Bootstrapper
         ServiceProvider.Instance.AddService<GameSessionService>(new GameSessionService());
         ServiceProvider.Instance.AddService<CurrencyService>(new CurrencyService());
         ServiceProvider.Instance.AddService<ShopService>(new ShopService());
+        ServiceProvider.Instance.AddService<GPGSManager>(new GPGSManager());
         
         #if UNITY_ANDROID && !UNITY_EDITOR
          ServiceProvider.Instance.AddService<IVibrationService>(new AndroidVibrationService());

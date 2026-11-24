@@ -15,6 +15,7 @@ public class Score : MonoBehaviour
 
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private GameSessionService Session => ServiceProvider.Instance.GetService<GameSessionService>();
+    private GPGSManager GPGS => ServiceProvider.Instance.GetService<GPGSManager>();
     private bool IsTutorial => Session != null && Session.SelectedMode == GameMode.Tutorial;
 
     private int _score;
@@ -39,6 +40,8 @@ public class Score : MonoBehaviour
 
     private void OnDisable()
     {
+        ReportCurrentScore();
+        
         EventBus.Unsubscribe<OnArchPassed>(OnArchPassed);
         EventBus.Unsubscribe<OnArchBroken>(OnArchBroken);
         EventBus.Unsubscribe<OnPlayerBounce>(OnPlayerBounce);
@@ -76,7 +79,14 @@ public class Score : MonoBehaviour
 
     private void OnPlayerRespawn(in OnPlayerRespawn eventData)
     {
+        ReportCurrentScore();
         ResetScore();
+    }
+
+    private void ReportCurrentScore()
+    {
+        if (!IsTutorial && _score > 0)
+            GPGS?.ReportScore(_score);
     }
 
     private void AddScore(int amount)

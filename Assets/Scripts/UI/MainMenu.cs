@@ -82,12 +82,12 @@ public class MainMenu : MonoBehaviour
 
     private void OnAchievementsClicked()
     {
-        Debug.Log("[MainMenu] Open achievements");
+        ServiceProvider.Instance.GetService<GPGSManager>().ShowAchievements();
     }
 
     private void OnLeaderboardClicked()
     {
-        Debug.Log("[MainMenu] Open leaderboard");
+        ServiceProvider.Instance.GetService<GPGSManager>().ShowLeaderboard();
     }
 
     private void OnLoggerClicked()

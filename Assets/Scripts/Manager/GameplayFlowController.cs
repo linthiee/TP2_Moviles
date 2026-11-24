@@ -2,25 +2,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class GameplayFlowController : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private TowerGenerator towerGenerator;
+    [Header("References")] [SerializeField]
+    private TowerGenerator towerGenerator;
+
     [SerializeField] private Player player;
 
-    [Header("Tutorial UI")]
-    [SerializeField] private GameObject tutorialBanner;
+    [Header("Tutorial UI")] [SerializeField]
+    private GameObject tutorialBanner;
+
     [SerializeField] private TMP_Text tutorialText;
 
-    [Header("Pause UI")]
-    [SerializeField] private Button pauseButton;
+    [Header("Pause UI")] [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button mainMenuButton;
 
-    [Header("Settings")]
-    [SerializeField] private string mainMenuSceneName = "Main Menu";
+    [Header("Settings")] [SerializeField] private string mainMenuSceneName = "Main Menu";
     [SerializeField] private float delayAfterWin = 1.5f;
     [SerializeField] private int spikeSlots = 14;
     [SerializeField] private int coinSlots = 3;
@@ -30,6 +31,7 @@ public class GameplayFlowController : MonoBehaviour
     private GameSessionService Session => ServiceProvider.Instance.GetService<GameSessionService>();
 
     private bool _isPaused;
+    private bool _hasAdvanced;
 
     private void OnEnable()
     {
@@ -55,6 +57,7 @@ public class GameplayFlowController : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         pausePanel.SetActive(false);
+        _hasAdvanced = false;
 
         UpdateTutorialUI();
     }
@@ -82,6 +85,13 @@ public class GameplayFlowController : MonoBehaviour
         }
         else if (Session.SelectedMode == GameMode.Level)
         {
+            #if UNITY_ANDROID && !UNITY_EDITOR
+            if (!_hasAdvanced)
+            { 
+                ServiceProvider.Instance.GetService<GPGSManager>()?.UnlockAchievement(GPGSIds.achievement_level_2);
+                _hasAdvanced = true;
+            }
+            #endif
             Session.AdvanceLevel();
             int totalFloors = baseFloorsPerLevel + (Session.CurrentLevel * 2);
             LoadNextStrategy(new LevelGenerationStrategy(Session.CurrentLevel, totalFloors, spikeSlots, coinSlots));
@@ -115,7 +125,8 @@ public class GameplayFlowController : MonoBehaviour
                 tutorialText.text = "Be careful! Dont touch the spikes";
                 break;
             case 3:
-                tutorialText.text = "Fall 3 floors in a row to instantly break the piece thats a different color! If you fail, you will have to jump on it 3 times";
+                tutorialText.text =
+                    "Fall 3 floors in a row to instantly break the piece thats a different color! If you fail, you will have to jump on it 3 times";
                 break;
         }
     }
