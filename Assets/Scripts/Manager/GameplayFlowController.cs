@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameplayFlowController : MonoBehaviour
@@ -56,9 +55,11 @@ public class GameplayFlowController : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1.0f;
-        pausePanel.SetActive(false);
-        _hasAdvanced = false;
 
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        _hasAdvanced = false;
         UpdateTutorialUI();
     }
 
@@ -79,19 +80,20 @@ public class GameplayFlowController : MonoBehaviour
             else
             {
                 Session.CompleteTutorial();
+                Session.SelectLevelMode();
                 int totalFloors = baseFloorsPerLevel + (Session.CurrentLevel * 2);
                 LoadNextStrategy(new LevelGenerationStrategy(Session.CurrentLevel, totalFloors, spikeSlots, coinSlots));
             }
         }
         else if (Session.SelectedMode == GameMode.Level)
         {
-            #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (!_hasAdvanced)
-            { 
+            {
                 ServiceProvider.Instance.GetService<GPGSManager>()?.UnlockAchievement(GPGSIds.achievement_level_2);
                 _hasAdvanced = true;
             }
-            #endif
+#endif
             Session.AdvanceLevel();
             int totalFloors = baseFloorsPerLevel + (Session.CurrentLevel * 2);
             LoadNextStrategy(new LevelGenerationStrategy(Session.CurrentLevel, totalFloors, spikeSlots, coinSlots));
@@ -108,6 +110,9 @@ public class GameplayFlowController : MonoBehaviour
 
     private void UpdateTutorialUI()
     {
+        if (tutorialBanner == null)
+            return;
+
         if (Session.SelectedMode != GameMode.Tutorial)
         {
             tutorialBanner.SetActive(false);
@@ -143,14 +148,18 @@ public class GameplayFlowController : MonoBehaviour
     {
         _isPaused = true;
         Time.timeScale = 0.0f;
-        pausePanel.SetActive(true);
+
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
     }
 
     private void ResumeGame()
     {
         _isPaused = false;
         Time.timeScale = 1.0f;
-        pausePanel.SetActive(false);
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
     }
 
     private void RestartLevel()
@@ -162,7 +171,6 @@ public class GameplayFlowController : MonoBehaviour
     private void GoToMainMenu()
     {
         Time.timeScale = 1.0f;
-
         AsyncLoading.Load(mainMenuSceneName);
     }
 }

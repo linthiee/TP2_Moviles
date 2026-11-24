@@ -14,7 +14,7 @@ public class GameSessionService : IService
 
     public bool IsPersistant => true;
 
-    public GameMode SelectedMode { get; private set; } = GameMode.Level;
+    public GameMode SelectedMode { get; private set; }
     public int CurrentLevel { get; private set; }
     public int TutorialStep { get; private set; } = 1;
     public bool IsTutorialCompleted { get; private set; }
@@ -24,20 +24,21 @@ public class GameSessionService : IService
         CurrentLevel = PlayerPrefs.GetInt(CurrentLevelKey, 1);
         int savedValue = PlayerPrefs.GetInt(TutorialDoneKey, 0);
 
-        if (savedValue == 1)
-            IsTutorialCompleted = true;
+        IsTutorialCompleted = savedValue == 1;
+
+        if (!IsTutorialCompleted)
+        {
+            SelectedMode = GameMode.Tutorial;
+            TutorialStep = 1;
+        }
         else
-            IsTutorialCompleted = false;
+        {
+            SelectedMode = GameMode.Level;
+        }
     }
 
     public void SelectLevelMode()
     {
-        if (!IsTutorialCompleted)
-        {
-            SelectTutorialMode();
-            return;
-        }
-
         SelectedMode = GameMode.Level;
     }
 
@@ -69,6 +70,5 @@ public class GameSessionService : IService
         IsTutorialCompleted = true;
         PlayerPrefs.SetInt(TutorialDoneKey, 1);
         PlayerPrefs.Save();
-        SelectedMode = GameMode.Level;
     }
 }
